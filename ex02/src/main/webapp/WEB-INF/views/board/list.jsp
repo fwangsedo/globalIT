@@ -40,8 +40,7 @@
 			<!-- /.panel-heading -->
 			<div class="panel-body">
 				<table width="100%"
-					class="table table-striped table-bordered table-hover"
-					id="dataTables-example">
+					class="table table-striped table-bordered table-hover">
 					<thead>
 						<tr>
 							<th>#번호</th>
@@ -64,21 +63,22 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<div class='pull-right'>
-					<ul class="pagination">
-						<c:if test="${pageMaker.prev }">
-							<li class="paginate_button previous"><a href="${pageMaker.startPage-1 }">Previous</a></li>
-						</c:if>
-						<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-							<li class="paginate_button ${pageMaker.cri.pageNum==num?"active":""}">
-								<a href="${num}">${num}</a>
-							</li>
-						</c:forEach>
-						<c:if test="${pageMaker.next }">
-							<li class="paginate_button next"><a href="${pageMaker.endPage+1 }">Next</a></li>
-						</c:if>
-					</ul>
-				</div><!-- pagination -->
+				<div class="pull-right">
+               <ul class="pagination">
+                  <c:if test="${pageMaker.prev}">
+                  <li class="paginate_button previous">
+                  <a href="${pageMaker.startPage-1}">Previous</a></li>
+                  </c:if>
+                  <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+                     <li class="paginate_button ${pageMaker.cri.pageNum==num?"active" : ""}">
+                     <a href="${num}">${num}</a></li>
+                  </c:forEach>
+                  <c:if test="${pageMaker.next}">
+                     <li class="paginate_button next">
+                     <a href="${pageMaker.endPage+1}">Next</a></li>
+                  </c:if>
+               </ul>
+            </div><!-- pagination -->
 				<form id="actionForm" action="/board/list" method='get'>
 					<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"> 
 					<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
@@ -119,6 +119,7 @@
 				e.preventDefault();
 				console.log('click');
 				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+				actionForm.submit();
 			});
 			
 			$(".move").on("click",function(e){
