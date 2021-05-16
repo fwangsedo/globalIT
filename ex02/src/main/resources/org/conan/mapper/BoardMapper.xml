@@ -46,6 +46,9 @@
 		]]>
 		
 	</select>
+	<select id="test">
+		selet * from tab;
+	</select>
 	
 	<select id="getTotalCount" resultType="int">
       select count(*) 
