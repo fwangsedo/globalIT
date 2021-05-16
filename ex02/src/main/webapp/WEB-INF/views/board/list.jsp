@@ -119,6 +119,7 @@
 				e.preventDefault();
 				console.log('click');
 				actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+				actionForm.submit();
 			});
 			
 			$(".move").on("click",function(e){
