@@ -13,4 +13,5 @@ public class BoardVO {
 	private String writer;
 	private Date regdate;
 	private Date updateDate;
+	//안녛하세요
 }
