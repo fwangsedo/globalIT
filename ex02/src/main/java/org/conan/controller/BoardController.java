@@ -58,11 +58,11 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@GetMapping("/modify")
-    public void modify(@RequestParam("bno")Long bno, Model model) {
-      log.info("modify-----------");
-      model.addAttribute("board", service.get(bno));
-    }
+	/*
+	 * @GetMapping("/modify") public void modify(@RequestParam("bno")Long bno, Model
+	 * model) { log.info("modify-----------"); model.addAttribute("board",
+	 * service.get(bno)); }
+	 */
 	
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {

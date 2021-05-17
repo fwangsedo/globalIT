@@ -63,25 +63,49 @@
 						</c:forEach>
 					</tbody>
 				</table>
+				
+				<div class='row'>
+					<div class="col-lg-12">
+						<form id='searchForm' action='/board/list' method='get'>
+							<select name='type'>
+								<option value="" <c:out value="${pageMaker.cri.type==null?'selected':'' }"/>>--</option>
+								<option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':'' }"/>>제목</option>
+								<option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':'' }"/>>내용</option>
+								<option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
+								<option value="TC" <c:out value="${pageMaker.cri.type eq 'TC'?'selected':'' }"/>>제목or내용</option>
+								<option value="TW" <c:out value="${pageMaker.cri.type eq 'TW'?'selected':'' }"/>>제목or작성자</option>
+								<option value="TCW" <c:out value="${pageMaker.cri.type eq 'TCW'?'selected':'' }"/>>제목or내용or작성자</option>							
+							</select>
+							<input type='text' name='keyword' value='<c:out value="${pageMaker.cri.keyword }"/>'/>
+							<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum }'/>
+							<input type='hidden' name='amount' value='${pageMaker.cri.amount }'/>
+							<button class='btn btn-info'>Search</button>
+						</form>
+					</div>
+				</div>
+				
 				<div class="pull-right">
-               <ul class="pagination">
-                  <c:if test="${pageMaker.prev}">
-                  <li class="paginate_button previous">
-                  <a href="${pageMaker.startPage-1}">Previous</a></li>
-                  </c:if>
-                  <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                     <li class="paginate_button ${pageMaker.cri.pageNum==num?"active" : ""}">
-                     <a href="${num}">${num}</a></li>
-                  </c:forEach>
-                  <c:if test="${pageMaker.next}">
-                     <li class="paginate_button next">
-                     <a href="${pageMaker.endPage+1}">Next</a></li>
-                  </c:if>
-               </ul>
-            </div><!-- pagination -->
+	               <ul class="pagination">
+	                  <c:if test="${pageMaker.prev}">
+	                  <li class="paginate_button previous">
+	                  <a href="${pageMaker.startPage-1}">Previous</a></li>
+	                  </c:if>
+	                  <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
+	                     <li class="paginate_button ${pageMaker.cri.pageNum==num?"active" : ""}">
+	                     <a href="${num}">${num}</a></li>
+	                  </c:forEach>
+	                  <c:if test="${pageMaker.next}">
+	                     <li class="paginate_button next">
+	                     <a href="${pageMaker.endPage+1}">Next</a></li>
+	                  </c:if>
+	               </ul>
+            	</div><!-- pagination -->
+            	
 				<form id="actionForm" action="/board/list" method='get'>
 					<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}"> 
 					<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+					<input type="hidden" name="type" value="${pageMaker.cri.type }">
+					<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword }"/>'/>
 				</form>
 				
 				
@@ -127,5 +151,21 @@
 				actionForm.append("<input type='hidden' name='bno' value='" + $(this).attr("href")+"'>");
 				actionForm.attr("action", "/board/get");
 				actionForm.submit();
+			});
+			
+			var searchForm = $("#searchForm");
+			$("#searchForm button").on("click", function(e){
+				if(!searchForm.find("option:selected").val()){
+					alert("검색종류를 선택하라우");
+					return false;
+				}
+				if(!searchForm.find("input[name='keyword']").val()){
+					alert("키워드를 입력하라우");
+					return false;
+				}
+				searchForm.find("input[name='pageNum']").val("1");
+				e.preventDefault();
+				searchForm.submit();
+				
 			});
 			</script>
