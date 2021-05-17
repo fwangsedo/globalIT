@@ -5,7 +5,7 @@
 
 <jsp:include page="../include/header.jsp"/>
 	<script>
-	
+	$(document).ready(function() {
 	var formObj = $("form");
 	 $('button').on("click", function(e){
 		 e.preventDefault();
@@ -18,14 +18,20 @@
 			 formObj.attr("action", "/board/list").attr("method", "get");
 			 var pageNumTag = $("input[name='pageNum']").clone();
 			 var amountTag = $("input[name='amount']").clone();
+			 var keywordTag = $("input[name='keyword']").clone();
+			 var typeTag = $("input[name='type']").clone();
 			 formObj.empty();
 			 formObj.append(pageNumTag);
 			 formObj.append(amountTag);
+			 formObj.append(keywordTag);
+			 formObj.append(typeTag);
 		 }
 		 
 		 formObj.submit();
 	 });
-	 });
+	});
+	 
+	 
 	</script>
         <!--header 끝 --------------------------------------------- -->
 
@@ -69,7 +75,9 @@
                          
                          <input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
                          <input type="hidden" name="amount" value='<c:out value='${cri.amount }'/>'>
-                         
+                         <input type="hidden" name="type" value="${cri.type }"/>
+						 <input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'/>
+						 
                          <button type="submit" data-oper='modify' class="btn btn-info">Modify</button>
                          <button type="submit" data-oper='remove' class="btn btn-danger">Remove</button>
                          <button type="submit" data-oper='list' class="btn btn-success">List</button>
