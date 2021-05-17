@@ -20,7 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.google.gson.Gson;
 
 import lombok.Setter;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j;  
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration

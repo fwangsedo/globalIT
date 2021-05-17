@@ -63,7 +63,7 @@ public class RSampleController {
 		}else {
 			result = ResponseEntity.status(HttpStatus.OK).body(vo);
 		}
-		return result;
+		return result;           
 	}
 	
 	@GetMapping("/product/{cat}/{pid}")
