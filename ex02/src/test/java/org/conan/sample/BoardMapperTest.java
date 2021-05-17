@@ -55,6 +55,7 @@ public class BoardMapperTest {
 		BoardVO board = new BoardVO();
 		board.setBno(3L);
 		board.setTitle("해바라기2");
+		//board.setContent("내가 10년동안 울면서 후회하고 다짐했는데 너네 꼭 그랬어야했냐");
 		board.setContent("꼭 그렇게 다 가져가야만...속이후련했냐! 씨발새끼들아");
 		board.setWriter("저새끼가 돌았나, 오태식이 돌아왔구나");
 		int count = mapper.update(board);
@@ -67,5 +68,24 @@ public class BoardMapperTest {
 		cri.setPageNum(2);
 		List<BoardVO> list = mapper.getListWithPaging(cri);
 		list.forEach(board->log.info(board));
+	}
+	
+	@Test
+	public void testSearch() {
+		Criteria cri = new Criteria();
+		cri.setKeyword("해바라기");
+		cri.setType("TC");
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		list.forEach(board-> log.info(board));
+	}
+	
+	@Test
+	public void testTotal() {
+		Criteria cri = new Criteria();
+		cri.setKeyword("해바라기");
+		cri.setType("TC");
+		int total = mapper.getTotalCount(cri);
+		log.info(total);
+		System.out.println("total : " + total);
 	}
 }

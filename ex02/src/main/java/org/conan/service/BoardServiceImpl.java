@@ -43,6 +43,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public boolean remove(Long bno) {
 		// TODO Auto-generated method stub
+		//System.out.println("나는 delete를할것이다.");
 		log.info("delete : " + bno);
 		return mapper.delete(bno)==1;
 	}
