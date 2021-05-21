@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.kcm.mapper.BoardMapper">
+	<select id="getList" resultType="org.kcm.domain.BoardVO">
+		select * from tbl_board where
+		bno=504
+	</select>
+
+	<insert id="insert">
+		insert into tbl_board(bno, title, content, writer)
+		values(seq_board.nextval, #{title}, #{content}, #{writer})
+	</insert>
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE"
+			resultType="long">
+			<!-- insert보다 먼저 sequence값을 읽어옴 bno라는 이름으로 -->
+			select seq_board.nextval from dual
+		</selectKey>
+		insert into tbl_board(bno, title, content, writer)
+		values(#{bno},#{title},#{content},#{writer})
+	</insert>
+
+	<select id="read" resultType="org.kcm.domain.BoardVO">
+		select * from tbl_board where
+		bno=#{bno}
+	</select>
+
+	<delete id="delete">
+		delete from tbl_board where bno=#{bno}
+	</delete>
+
+	<update id="update">
+		update tbl_board
+		set title=#{title},
+		content=#{content},
+		updateDate = sysdate
+		where bno=#{bno}
+	</update>
+
+	<sql id="criteria">
+		<trim prefix="(" suffix=")AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type=='T'.toString()">title like '%'||#{keyword}||'%'</when>
+						<when test="type=='C'.toString()">content like '%'||#{keyword}||'%'</when>
+						<when test="type=='W'.toString()">writer like '%'||#{keyword}||'%'</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+	<select id="getListWithPaging"
+		resultType="org.kcm.domain.BoardVO">
+		<![CDATA[ 
+			select *
+			from
+			(
+			select /* +index_desc(tbl_board pk_board)*/
+			rownum rn, bno, title, content, writer, regDate, updateDate, replyCnt
+			from 
+				tbl_board
+			where
+		]]>	 
+		<include refid="criteria"></include>
+		<![CDATA[
+			rownum <= #{pageNum}*#{amount}
+			)
+			where rn > (#{pageNum}-1)*#{amount}
+			order by bno desc
+		]]>
+		<!-- 특수문자가 포함된다는 것을 표현한 태그 -->
+	</select>
+
+	<select id="getTotal" resultType="int">
+		select count(*) from tbl_board where
+		<include refid="criteria"></include>
+		bno>0
+	</select>
+	
+	<update id="updateReplyCnt">
+		update tbl_board
+		set replyCnt = replyCnt+#{amount}
+		where bno = #{bno}
+	</update>
+
+</mapper>
