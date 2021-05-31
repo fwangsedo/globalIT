@@ -5,7 +5,9 @@
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
@@ -29,6 +31,12 @@
       <property name="dataSource" ref="dataSource"></property>
    </bean>
    
+   <bean id="customAccessDenied" class="org.kcm.security.CustomAccessDeniedHandler"></bean>
+   <!-- <bean id="customPasswordEncoder" class="org.kcm.security.CustomNoOpPasswordEncoder"></bean> -->
+   <bean id="customLoginSuccess" class="org.kcm.security.CustomLoginSuccessHandler"></bean>
+   <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+   <bean id="customUserDetailsService" class="org.kcm.security.CustomUserDetailsService"/>
+   
    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
    	<property name="dataSource" ref="dataSource"></property>
    </bean>
@@ -39,6 +47,9 @@
    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
    
    <context:component-scan base-package="org.kcm.*"/>
+   
+   <context:component-scan base-package="org.kcm.task"></context:component-scan>
+   <task:annotation-driven/>
    
    <mybatis-spring:scan base-package="org.kcm.mapper"/>
 

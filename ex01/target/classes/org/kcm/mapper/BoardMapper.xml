@@ -59,7 +59,7 @@
 			select *
 			from
 			(
-			select /* +index_desc(tbl_board pk_board)*/
+			select /*+index_desc(tbl_board pk_board)*/
 			rownum rn, bno, title, content, writer, regDate, updateDate, replyCnt
 			from 
 				tbl_board

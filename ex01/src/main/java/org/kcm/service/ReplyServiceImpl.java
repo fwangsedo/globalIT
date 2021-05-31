@@ -27,6 +27,7 @@ public class ReplyServiceImpl implements ReplyService{
 	@Setter(onMethod_ = @Autowired)
 	private BoardMapper bMapper;
 	
+	//데이터를 http url 
 	@Transactional
 	@Override
 	public int register(ReplyVO vo) {

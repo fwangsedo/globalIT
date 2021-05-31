@@ -3,11 +3,13 @@ package org.kcm.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.kcm.domain.Criteria;
 import org.kcm.domain.ReplyVO;
 
 public interface ReplyMapper {
 
+	
 	public List<ReplyVO> getList();
 	public int insert(ReplyVO vo);
 	public ReplyVO read(Long rno);
